@@ -1,20 +1,27 @@
-let str = `Мне не удобно. Перенесите пожалуйста запись на субботу или 26(ое) 27(ое) с 14(и)00 до 16(и)15(и).`;
+let input =
+  'Мне не удобно. Перенесите пожалуйста запись на субботу или 26(ое) 27(ое) с 14(и)00(и) до 16(и)15(и).';
+let parsedInput = [];
 
-let strArr = [];
+parsedInput = input.toLowerCase().split(' ');
 
-strArr = str.split(' ');
-
-console.log(strArr);
-
-function filterStrArr(word) {
-  switch (word) {
-    case word.includes('суббот') === true:
-      return word;
-    // default:
-    //   return;
+function f(x) {
+  if (
+    x.includes('понедельн') ||
+    x.includes('вторник') ||
+    x.includes('среду') ||
+    x.includes('среда') ||
+    x.includes('четверг') ||
+    x.includes('пятниц') ||
+    x.includes('суббот') ||
+    x.includes('воскресен')
+  ) {
+    return x;
+  } else if (x.includes('(ое)')) {
+    return x;
+  } else if (x.includes('(и)')) {
+    return x;
   }
 }
 
-let filteredArr = strArr.filter('запись');
-
-console.log(filteredArr);
+let cleanedArr = parsedInput.filter((item) => f(item));
+console.log(cleanedArr);
