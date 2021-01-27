@@ -8,7 +8,7 @@ let input4 =
   'Мне не удобно. Перенесите пожалуйста запись на среду с 12(и)15(и) до 15(и)30(и) или пятницу с 19(и)25(и) до 20(и)45(и)';
 let parsedInput = [];
 
-parsedInput = input4.toLowerCase().split(' ');
+parsedInput = input3.toLowerCase().split(' ');
 
 function f(x) {
   if (
@@ -46,3 +46,56 @@ function f(x) {
 
 let cleanedArr = parsedInput.filter((item) => f(item));
 console.log(cleanedArr);
+
+let preformatedArr = [];
+
+function formatDayMonthDate(arr) {
+  let x = [];
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i].includes('понедельн')) {
+      x.push({ day: 'monday' });
+    }
+    if (arr[i].includes('вторник')) {
+      x.push({ day: 'tuesday' });
+    }
+    if (arr[i].includes('среда') || arr[i].includes('среду')) {
+      x.push({ day: 'wednesday' });
+    }
+    if (arr[i].includes('четверг')) {
+      x.push({ day: 'thursday' });
+    }
+    if (arr[i].includes('пятниц')) {
+      x.push({ day: 'friday' });
+    }
+    if (arr[i].includes('суббот')) {
+      x.push({ day: 'saturday' });
+    }
+    if (arr[i].includes('воскресен')) {
+      x.push({ day: 'sunday' });
+    }
+    if (arr[i].includes('(ое)')) {
+      let day = Number(arr[i].split('(ое)').filter(Number));
+      x.push({ date: day });
+    }
+    if (arr[i].includes('(и)')) {
+      let time = arr[i].split('(и)').filter(Number).join(':');
+      if (time.length < 3) {
+        time += ':00';
+      }
+      x.push({ time: time });
+    }
+    if (arr[i].includes('следующ') && arr[i + 1].includes('недел')) {
+      x.push({ week: 'next' });
+    }
+    if (arr[i].includes('январ')) {
+      x.push({ month: 'january' });
+    }
+    if (arr[i].includes('феврал')) {
+      x.push({ month: 'february' });
+    }
+    // TODO: Add more months.
+  }
+  return x;
+}
+
+preformatedArr = formatDayMonthDate(cleanedArr); //?
